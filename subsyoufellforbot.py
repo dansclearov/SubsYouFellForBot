@@ -18,8 +18,8 @@ def run(reddit, subreddit_name):
             text = comment.body
             if text.startswith("r/") and " " not in text: # if it may be a subreddit
                 try:
-                    reddit.subreddit(text).posts().next() # no posts -- doesn't exit
-                except prawcore.exceptions.BadRequest:
+                    reddit.subreddit(text[2:]).stream.submissions().__next__() # no posts -- doesn't exit
+                except prawcore.exceptions.NotFound:
                     comment.reply("r/subsyoufellfor")
                     print("Found non existing subreddit {0}, commenting...".format(text))
                 except Exception as e:
@@ -33,7 +33,7 @@ reddit = login()
 print("Starting to search for comments...")
 while True:
     try:
-        run(reddit, "all")
+        run(reddit, "test")
     except KeyboardInterrupt:
         print("\nCtrl + C pressed, exiting...")
         break
