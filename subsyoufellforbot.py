@@ -16,7 +16,7 @@ def run(reddit, subreddit_name):
     try:
         for comment in comments:
             text = comment.body
-            if text.startswith("r/") and " " not in text: # if it may be a subreddit
+            if text.startswith("r/") and " " not in text and "?" not in text: # if it may be a subreddit
                 try:
                     reddit.subreddits.search_by_name(text[2:], exact=True)
                 except prawcore.exceptions.NotFound:
